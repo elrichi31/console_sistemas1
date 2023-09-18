@@ -7,7 +7,7 @@ public class Consola {
     private File currentDirectory = new File(System.getProperty("user.dir"));
     private String textoTerminal = currentDirectory.getAbsolutePath() + " : ";
     private final boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
-    private List<String> commandHistory = new ArrayList<>();
+    private final List<String> commandHistory = new ArrayList<>();
 
 
     public static void main(String[] args) {
