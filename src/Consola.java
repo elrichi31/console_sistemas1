@@ -28,7 +28,6 @@ public class Consola {
                     break;
                 }
 
-                // Check if it's !#
                 if (comando.equals("!#")) {
                     if (!commandHistory.isEmpty()) {
                         comando = commandHistory.get(commandHistory.size() - 1);
@@ -55,7 +54,6 @@ public class Consola {
             for (String comando : comandos) {
                 comando = comando.trim();
 
-                // If it's a replay command, replace it with the appropriate command from the history
                 if (comando.equals("!#") && !commandHistory.isEmpty()) {
                     comando = commandHistory.get(commandHistory.size() - 1);
                 } else if (comando.startsWith("!")) {
@@ -63,7 +61,6 @@ public class Consola {
                         int index = Integer.parseInt(comando.substring(1)) - 1;
                         if (index >= 0 && index < commandHistory.size()) {
                             comando = commandHistory.get(index);
-                            // Check if the extracted command contains '@' and recursively process it
                             if (comando.contains("@")) {
                                 mensageSalida(comando);
                                 continue;
@@ -95,7 +92,6 @@ public class Consola {
             return;
         }
 
-        // Clear screen command
         if (comando.equals("cls") || comando.equals("clear")) {
             if (isWindows) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -106,7 +102,6 @@ public class Consola {
             return;
         }
 
-        // Change directory command
         if (comando.startsWith("cd ")) {
             String newDir = comando.substring(3).trim();
             File newDirectory = new File(currentDirectory, newDir);
