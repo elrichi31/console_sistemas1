@@ -31,6 +31,7 @@ public class Consola {
         }
     }
 
+
     public void mensageSalida(final String cadena) {
         try {
             if (cadena.equals("cls") || cadena.equals("clear")) {
