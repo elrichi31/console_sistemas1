@@ -5,7 +5,7 @@ import java.util.List;
 public class Consola {
 
     private File currentDirectory = new File(System.getProperty("user.dir"));
-    private String textoTerminal = currentDirectory.getAbsolutePath() + " : ";
+    private String textoTerminal = currentDirectory.getAbsolutePath() + "> ";
     private final boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
     private final List<String> commandHistory = new ArrayList<>();
 
@@ -66,7 +66,7 @@ public class Consola {
                                 continue;
                             }
                         } else {
-                            System.out.println("Error: Índice fuera de rango.");
+                            System.out.println("Error: indice fuera de rango.");
                             continue;
                         }
                     } catch (NumberFormatException e) {
@@ -106,7 +106,7 @@ public class Consola {
             File newDirectory = new File(currentDirectory, newDir);
             if (newDirectory.exists() && newDirectory.isDirectory()) {
                 currentDirectory = newDirectory.getCanonicalFile();
-                textoTerminal = currentDirectory.getAbsolutePath() + " : ";
+                textoTerminal = currentDirectory.getAbsolutePath() + "> ";
                 return;
             } else {
                 System.out.println("Error: el directorio no existe.");
