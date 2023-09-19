@@ -7,7 +7,7 @@ public class Consola {
     private File currentDirectory = new File(System.getProperty("user.dir"));
     private String textoTerminal = currentDirectory.getAbsolutePath() + "> ";
     private final boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
-    private final List<String> commandHistory = new ArrayList<>();
+    private final List<String> commandHistory = new ArrayList<>(20);
 
 
     public static void main(String[] args) {
@@ -39,7 +39,7 @@ public class Consola {
                     commandHistory.add(comando);
                 }
 
-                System.out.println(comando + ":");
+                //System.out.println(comando + ":");
                 mensageSalida(comando);
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
@@ -75,7 +75,7 @@ public class Consola {
                         continue;
                     }
                 }
-
+                System.out.println(comando + ":");
                 executeCommand(comando);
             }
         } catch (Exception e) {
