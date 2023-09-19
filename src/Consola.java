@@ -39,6 +39,7 @@ public class Consola {
                     commandHistory.add(comando);
                 }
 
+                System.out.println(comando + ":");
                 mensageSalida(comando);
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
@@ -85,6 +86,7 @@ public class Consola {
 
     private void executeCommand(String comando) throws IOException, InterruptedException {
         // History command
+
         if (comando.equalsIgnoreCase("history")) {
             for (int i = 0; i < commandHistory.size(); i++) {
                 System.out.println((i + 1) + ". " + commandHistory.get(i));
