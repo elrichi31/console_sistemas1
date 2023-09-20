@@ -4,11 +4,14 @@ import java.util.List;
 
 public class Consola {
 
+    // Directorio actual
     private File currentDirectory = new File(System.getProperty("user.dir"));
+    // Texto del prompt
     private String textoTerminal = currentDirectory.getAbsolutePath() + "> ";
-    private final boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
-    private final List<String> commandHistory = new ArrayList<>(20);
+    //private final boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 
+    // Historial de comandos
+    private final List<String> commandHistory = new ArrayList<>(20);
 
     public static void main(String[] args) {
         Consola consola = new Consola();
@@ -28,6 +31,7 @@ public class Consola {
                     break;
                 }
 
+                // Control de comandos especiales: !#, history
                 if (comando.equals("!#")) {
                     if (!commandHistory.isEmpty()) {
                         comando = commandHistory.get(commandHistory.size() - 1);
@@ -39,7 +43,6 @@ public class Consola {
                     commandHistory.add(comando);
                 }
 
-                //System.out.println(comando + ":");
                 mensageSalida(comando);
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
@@ -85,8 +88,8 @@ public class Consola {
 
 
     private void executeCommand(String comando) throws IOException, InterruptedException {
-        // History command
 
+        // Comando 'history'
         if (comando.equalsIgnoreCase("history")) {
             for (int i = 0; i < commandHistory.size(); i++) {
                 System.out.println((i + 1) + ". " + commandHistory.get(i));
@@ -94,15 +97,19 @@ public class Consola {
             return;
         }
 
+        // Comandos 'cls' o 'clear' (limpian la consola)
         if (comando.equals("cls") || comando.equals("clear")) {
-            if (isWindows) {
+            /*if (isWindows) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 System.out.flush();
-            }
+            }*/
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+
             return;
         }
 
+        // Comando 'cd <directorio>' (cambiar directorio)
         if (comando.startsWith("cd ")) {
             String newDir = comando.substring(3).trim();
             File newDirectory = new File(currentDirectory, newDir);
@@ -116,12 +123,15 @@ public class Consola {
             }
         }
 
+        // Ejecutar comandos en el sistema operativo
         ProcessBuilder pb;
-        if (isWindows) {
+        /*if (isWindows) {
             pb = new ProcessBuilder("cmd", "/c", comando);
         } else {
             pb = new ProcessBuilder("/bin/sh", "-c", comando);
-        }
+        }*/
+
+        pb = new ProcessBuilder("cmd", "/c", comando);
         pb.directory(currentDirectory);
 
         Process p = pb.start();
